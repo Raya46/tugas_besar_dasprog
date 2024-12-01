@@ -245,52 +245,6 @@ void addMovie()
     printf("Film berhasil ditambahkan\n");
 }
 
-void editMovie()
-{
-    char title[100];
-    printf("Masukkan judul film yang ingin diubah: ");
-    scanf(" %[^\n]", title);
-
-    int index = binarySearchMovies(title);
-    if (index == -1)
-    {
-        printf("Film tidak ditemukan\n");
-        return;
-    }
-    printf("Masukkan judul baru: ");
-    scanf(" %[^\n]", movies[index].title);
-    printf("Masukkan genre baru: ");
-    scanf(" %[^\n]", movies[index].genre);
-    printf("Masukkan durasi (menit): ");
-    scanf("%f", &movies[index].duration);
-    printf("Masukkan batas usia: ");
-    scanf("%d", &movies[index].ageRating);
-    printf("Masukkan total tiket: ");
-    scanf("%d", &movies[index].totalTickets);
-    movies[index].availableTickets = movies[index].totalTickets;
-
-    printf("Film berhasil diperbarui\n");
-}
-
-void deleteMovie()
-{
-    char title[100];
-    printf("Masukkan judul film yang ingin dihapus: ");
-    scanf(" %[^\n]", title);
-    int index = binarySearchMovies(title);
-    if (index == -1)
-    {
-        printf("Film tidak ditemukan\n");
-        return;
-    }
-    for (int i = index; i < movieCount - 1; i++)
-    {
-        movies[i] = movies[i + 1];
-    }
-    movieCount--;
-    printf("Film berhasil dihapus\n");
-}
-
 void tableFormat(char type)
 {
     if (type == 't')
@@ -343,6 +297,55 @@ void displayMovies()
     }
 
     tableFormat('m');
+}
+
+void editMovie()
+{
+    char title[100];
+    displayMovies();
+    printf("Masukkan judul film yang ingin diubah: ");
+    scanf(" %[^\n]", title);
+    sortMoviesById();
+    int index = binarySearchMovies(title);
+    if (index == -1)
+    {
+        printf("Film tidak ditemukan\n");
+        return;
+    }
+    printf("Masukkan judul baru: ");
+    scanf(" %[^\n]", movies[index].title);
+    printf("Masukkan genre baru: ");
+    scanf(" %[^\n]", movies[index].genre);
+    printf("Masukkan durasi (menit): ");
+    scanf("%f", &movies[index].duration);
+    printf("Masukkan batas usia: ");
+    scanf("%d", &movies[index].ageRating);
+    printf("Masukkan total tiket: ");
+    scanf("%d", &movies[index].totalTickets);
+    movies[index].availableTickets = movies[index].totalTickets;
+
+    printf("Film berhasil diperbarui\n");
+}
+
+void deleteMovie()
+{
+    char title[100];
+    displayMovies();
+    printf("Masukkan judul film yang ingin dihapus: ");
+    scanf(" %[^\n]", title);
+    sortMoviesById();
+    int index = binarySearchMovies(title);
+    if (index == -1)
+    {
+        printf("Film tidak ditemukan\n");
+        return;
+    }
+    for (int i = index; i < movieCount - 1; i++)
+    {
+        movies[i] = movies[i + 1];
+    }
+    movieCount--;
+    printf("Film berhasil dihapus\n");
 }
 
 void addTheater()
